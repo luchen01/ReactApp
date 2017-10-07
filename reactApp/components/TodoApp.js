@@ -38,11 +38,19 @@ componentDidMount(){
    })
   }
 
+  toggleComplete(index){
+    var toggleTodo = this.state.todos;
+    toggleTodo[index].completed = !toggleTodo[index].completed
+    this.setState({
+      todos: toggleTodo
+    })
+  }
+
   render(){
     return(
       <div>
         <InputLine submit = {this.addTodo.bind(this)}/>
-        <TodoList todos={this.state.todos} todoXClick = {this.removeTodo.bind(this)} />
+        <TodoList todos={this.state.todos} todoXClick = {this.removeTodo.bind(this)} toggleState = {this.toggleComplete.bind(this)} />
       </div>
 
     )
