@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import InputLine from './InputLine.js';
 import TodoList from './TodoList.js'
+import Axios from 'axios';
+const dbUrl = "http://localhost:3000/db";
 
 var dummyData = [{taskText: "grocery shopping", completed: false},
 {taskText: "call my parents", completed: false},
@@ -22,12 +24,28 @@ componentDidMount(){
     })
 }
 
-  addTodo(event){
+  addTodo(event, taskName){
     // event.preventDefault()
-    var newTodo = this.state.todos.concat([{taskText: event.target.value, completed: false}]);
-    this.setState({
-      todos: newTodo
-    })
+    // var newTodo = this.state.todos.concat([{taskText: event.target.value, completed: false}]);
+    // this.setState({
+    //   todos: newTodo
+    // })
+    var self = this;
+    Axios.post(dbUrl + '/add', {task: taskName})
+      .then(function (response) {
+        // Do whatever you want with the request's response in here
+        self.setState({
+          todos: self.state.todos.concat([{taskText: response.data.task, completed: false}])
+        })
+        console.log("success");
+        console.log(self.state.todos)
+      })
+      .catch(function (error) {
+        // Do whatever you want in the event of an error in here
+        console.log("err", error)
+      });
+
+
   }
 
   removeTodo(index){

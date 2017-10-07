@@ -18,7 +18,7 @@ handleTyping(event){
 
 handleSubmit(event){
   event.preventDefault();
-  this.props.submit(event);
+  this.props.submit(event, this.state.typedText);
   this.setState({
     typedText:''
   })
@@ -26,7 +26,7 @@ handleSubmit(event){
 
   render(){
     return (<form>
-      <input onChange = {(event)=>this.handleTyping(event)} type = "text" value = {this.state.typedText} ></input>
+      <input onChange = {(event)=>this.handleTyping(event)} type = "text" value = {this.state.typedText} name = "taskName"></input>
       <button onClick = {(event)=>this.handleSubmit(event)} className="btn btn-default" value = {this.state.typedText}>Add todo</button>
     </form>)
   }
